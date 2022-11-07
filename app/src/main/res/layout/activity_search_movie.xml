@@ -16,7 +16,7 @@
             android:id="@+id/search_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="hint" />
+            android:hint="put movie title here!!" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

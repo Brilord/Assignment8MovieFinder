@@ -98,9 +98,11 @@ public class MainActivity extends AppCompatActivity {
                                 imageurl = response.getString("Poster");
                                 titletxt.setText(response.getString("Title"));
                                 yearofreleasetxt.setText(response.getString("Year"));
+                                rating.setText(response.getString("imdbRating"));
                                 runningtime.setText(response.getString("Runtime"));
                                 genre.setText(response.getString("Genre"));
                                 website_link.setText(response.getString("Website"));
+
                                 Picasso.get().load(response.getString("Poster")).into(imageView);
                                 Log.d("HELLO", "helle");
                             } catch (JSONException e) {
@@ -126,13 +128,15 @@ public class MainActivity extends AppCompatActivity {
                 sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this movie "+title
                         + ". This is the url for the movie cove " + imageurl);
                 sendIntent.setType("text/plain");
-                //sendIntent.setType("text/plain");
-                //BitmapDrawable bitmapDrawable = imageView.getDrawable();
-                //Bitmap bitmap = bitmapDrawable.getBitmap();
+
+                Uri imageUri = Uri.parse(imageurl);
+                sendIntent.setType("image/jpg");
+                sendIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
                 try {
                     startActivity(sendIntent);
                 } catch (ActivityNotFoundException e) {
                     // Define what your app should do if no activity can handle the intent.
+                    Toast.makeText(MainActivity.this, "ummm... something is wrong!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
