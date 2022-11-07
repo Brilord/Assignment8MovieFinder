@@ -35,6 +35,9 @@ public class SearchMovie extends AppCompatActivity {
                 if(searchInput.getText().toString().isEmpty()) {
                     Toast.makeText(SearchMovie.this, "umm.. enter something..", Toast.LENGTH_SHORT).show();
                 } else {
+                    //String str = "     Geeks     for Geeks     ";
+                    searchInputString = searchInput.getText().toString();
+                    searchInputString = searchInputString.replaceAll("\\s", "+");
                     Intent i = new Intent(SearchMovie.this, MainActivity.class);
                     searchInputString = searchInput.getText().toString();
                     i.putExtra("search_input",searchInputString);

@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     String value;
     String urlForDescription;
     String urlForPoster;
-    String title, imageurl;
+    String title, imageurl, website_link_string;
     TextView titletxt, yearofreleasetxt,rating, runningtime, genre, website_link;
     ImageView imageView;
     Button share_button;
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                                 runningtime.setText(response.getString("Runtime"));
                                 genre.setText(response.getString("Genre"));
                                 website_link.setText(response.getString("Website"));
-
+                                website_link_string = response.getString("Website");
                                 Picasso.get().load(response.getString("Poster")).into(imageView);
                                 Log.d("HELLO", "helle");
                             } catch (JSONException e) {
@@ -125,10 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 // Create the text message with a string.
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this movie "+title
-                        + ". This is the url for the movie cove " + imageurl);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Check out this movie "+title+"");
                 sendIntent.setType("text/plain");
-
                 Uri imageUri = Uri.parse(imageurl);
                 sendIntent.setType("image/jpg");
                 sendIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
@@ -140,7 +138,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        website_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website_link_string));
+                startActivity(browserIntent);
+            }
+        });
     }
 
     @Override
@@ -156,6 +160,10 @@ public class MainActivity extends AppCompatActivity {
         {
             case R.id.feedback:
                 startActivity(new Intent(getApplicationContext(), FeedbackEmailActivity.class));
+                break;
+            case R.id.go_back:
+                startActivity(new Intent(getApplicationContext(), SearchMovie.class));
+                break;
         }
         return true;
     }
